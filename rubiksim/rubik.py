@@ -1,0 +1,143 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Fri Dec 21 15:51:06 2018
+
+@author: adrien
+
+"""
+import numpy as np
+import pandas as pd
+
+class rubik_cube:
+    
+    """
+    This is a rubik's cube class simulator
+    
+    Attributes :
+        - state : a 9x6 array of value between 1 and 6
+    
+    """
+    
+    number_of_face = 6
+    number_of_element_in_sideface = 3
+    
+    def __init__(self, init_state=None, **args):
+        """
+        Initialisation of the rubik
+        
+        """
+        
+        # init state initialisation
+        if init_state != None:
+            self.state = init_state
+        else:
+            # perfect cube
+            init_state = np.zeros((self.number_of_element_in_sideface, 
+                                   self.number_of_element_in_sideface,self.number_of_face))
+            
+            for i in range(self.number_of_face):
+                init_state[:,:,i] = i
+                self.state = init_state
+            
+        # other ?
+        
+        
+    def move(self,index_move):
+        """
+        For the convention there is exactly 12 possible moves
+        the move are indexed between 0 and 11
+        """
+        value_side = index_move % 2 # entre 0 et 1
+        value_side_rotation = index_move // 4 # entre 0 et 2
+        value_side_inverse = (index_move % 4)//2 # entre 0 et 1
+        
+        #print("value_side= ", str(value_side))
+        #print("value_side_rotation= ", str(value_side_rotation))
+        #print("value_side_inverse= ", str(value_side_inverse))
+        
+        if value_side == 1:
+           value_side = 2 # correction to simplify the calculation 
+        
+        if value_side_rotation == 0:
+            
+            # inversion value
+            if value_side_inverse == 0:
+                self.state[:,value_side,[5,1,4,3]] = self.state[:,value_side,[1,4,3,5]]
+                
+                if value_side == 0: 
+                    self.state[:,:,0] = np.rot90(self.state[:,:,0],k=3)
+                else:
+                    self.state[:,:,2] = np.rot90(self.state[:,:,2])
+                    
+            else:
+                self.state[:,value_side,[5,1,4,3]] = self.state[:,value_side,[3,5,1,4]]
+                
+                if value_side == 0: 
+                    self.state[:,:,0] = np.rot90(self.state[:,:,0])
+                else:
+                    self.state[:,:,2] = np.rot90(self.state[:,:,2], k=3)
+                
+
+        elif value_side_rotation == 1:
+            
+            # inversion value
+            if value_side_inverse == 0:
+                self.state[:,value_side,[5,0,4,2]] = self.state[:,value_side,[0,4,2,5]]
+                
+                if value_side == 0: 
+                    self.state[:,:,1] = np.rot90(self.state[:,:,1],k=3)
+                else:
+                    self.state[:,:,3] = np.rot90(self.state[:,:,3])
+                    
+            else:
+                self.state[:,value_side,[5,0,4,2]] = self.state[:,value_side,[2,5,0,4]]
+                
+                if value_side == 0: 
+                    self.state[:,:,1] = np.rot90(self.state[:,:,1])
+                else:
+                    self.state[:,:,3] = np.rot90(self.state[:,:,3], k=3)
+                
+                
+        # TODO again
+        elif value_side_rotation == 2:
+            
+            tmp_state = np.copy(self.state)
+            # inversion value
+            if value_side_inverse == 0:
+                # TODO more complex
+                self.state[:,value_side,0] = tmp_state[value_side,:,1][::-1]
+                self.state[2-value_side,:,3] = tmp_state[:,value_side,0]
+                self.state[:,2-value_side,2] = tmp_state[2-value_side,:,3][::-1]
+                self.state[value_side,:,1] = tmp_state[:,2-value_side,2]                
+                
+                if value_side == 0: 
+                    self.state[:,:,4] = np.rot90(self.state[:,:,4],k=3)
+                else:
+                    self.state[:,:,5] = np.rot90(self.state[:,:,5])
+                    
+            else:
+                
+                self.state[value_side,:,1] = tmp_state[:,value_side,0][::-1]
+                self.state[:,value_side,0] = tmp_state[2-value_side,:,3]
+                self.state[2-value_side,:,3] = tmp_state[:,2-value_side,2][::-1]
+                self.state[:,2-value_side,2] = tmp_state[value_side,:,1]
+                
+                if value_side == 0: 
+                    self.state[:,:,4] = np.rot90(self.state[:,:,4])
+                else:
+                    self.state[:,:,5] = np.rot90(self.state[:,:,5], k=3)        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
