@@ -22,15 +22,16 @@ class rubik_cube:
     number_of_face = 6
     number_of_element_in_sideface = 3
     
-    def __init__(self, init_state=None, **args):
+    def __init__(self, init_state=None):
         """
         Initialisation of the rubik
         
         """
         
         # init state initialisation
-        if init_state != None:
+        if init_state is not None:
             self.state = init_state
+            self.init_state = np.copy(init_state)
         else:
             # perfect cube
             init_state = np.zeros((self.number_of_element_in_sideface, 
@@ -38,8 +39,8 @@ class rubik_cube:
             
             for i in range(self.number_of_face):
                 init_state[:,:,i] = i
-                self.state = init_state
-            
+            self.state = init_state
+            self.init_state = np.copy(init_state)
         # other ?
         
         
@@ -47,10 +48,23 @@ class rubik_cube:
         """
         For the convention there is exactly 12 possible moves
         the move are indexed between 0 and 11
+        
+        the index is in 
+        [X Y Z] with
+        X : 0 1 2 3  
+        Y : 4 5 6 7
+        Z : 8 9 10 11
+        
+        The first two number here are the move corresponding the a certain 
+        position on the face.
+        
+        The two other number at the end are the inverse of those move (the two first)
+        
+        X Y and Z corresponding to the rotation angle
         """
-        value_side = index_move % 2 # entre 0 et 1
-        value_side_rotation = index_move // 4 # entre 0 et 2
-        value_side_inverse = (index_move % 4)//2 # entre 0 et 1
+        value_side = index_move % 2 # entre 0 et 1 the position of the rotation on the face
+        value_side_rotation = index_move // 4 # entre 0 et 2 the rotation index of the array
+        value_side_inverse = (index_move % 4)//2 # entre 0 et 1 if inverse or not
         
         #print("value_side= ", str(value_side))
         #print("value_side_rotation= ", str(value_side_rotation))

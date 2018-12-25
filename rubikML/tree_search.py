@@ -9,6 +9,9 @@ Created on Sat Dec 22 15:30:07 2018
 import numpy as np
 import pandas as pd
 
+import sys
+import os
+
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 import rubiksim.rubik as rb
@@ -26,6 +29,7 @@ class TreeSearch:
     def __init__(self, nb_smooth=3):
         self.nb_smooth = nb_smooth
         self.perfect_rubik = rb.rubik_cube().init_state
+        
 
     def main_random_solving(self, nb_DFS, nb_smooth):
         
@@ -37,6 +41,10 @@ class TreeSearch:
         
     def solve_rubik(self, rubik_cube, nb_DFS, seq_move):
         
+        print("call to function")
+        print("sequence move : " + str(seq_move))
+        print(rubik_cube.state)
+        
         if self.solve == 0:
             if np.array_equal(rubik_cube.state, self.perfect_rubik):
                 print("solve !")
@@ -45,7 +53,8 @@ class TreeSearch:
                 self.solve = 1
             else:
                 if nb_DFS != 0:
-                    for i in range(12):        
+                    for i in range(12):
+                        rubik_cube.move(i)
                         self.solve_rubik(rubik_cube, nb_DFS-1, seq_move + [i])            
                 
                 # get the inverse move
@@ -66,12 +75,14 @@ class TreeSearch:
     
     def smooth_rubik(self, rubik_array, nb_smooth):
         
+        
         rubik_ = rb.rubik_cube(rubik_array)
         
         smooth_sequence = np.random.randint(0,12,nb_smooth)
         self.smooth = smooth_sequence
         
-        for i in smooth_sequence :
+        for i in smooth_sequence:
+
             rubik_.move(i)
         
         return rubik_

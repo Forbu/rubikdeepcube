@@ -1,0 +1,10 @@
+WebEngineContext used before QtWebEngine::initialize() or OpenGL context creation failed.
+Failed to create OpenGL context for format QSurfaceFormat(version 2.0, options QFlags<QSurfaceFormat::FormatOption>(), depthBufferSize 24, redBufferSize -1, greenBufferSize -1, blueBufferSize -1, alphaBufferSize -1, stencilBufferSize 8, samples 0, swapBehavior QSurfaceFormat::SwapBehavior(DefaultSwapBehavior), swapInterval 1, profile  QSurfaceFormat::OpenGLContextProfile(NoProfile)) 
+WebEngineContext used before QtWebEngine::initialize() or OpenGL context creation failed.
+Failed to create OpenGL context for format QSurfaceFormat(version 2.0, options QFlags<QSurfaceFormat::FormatOption>(), depthBufferSize 24, redBufferSize -1, greenBufferSize -1, blueBufferSize -1, alphaBufferSize -1, stencilBufferSize 8, samples 0, swapBehavior QSurfaceFormat::SwapBehavior(DefaultSwapBehavior), swapInterval 1, profile  QSurfaceFormat::OpenGLContextProfile(NoProfile)) 
+[7178:7178:1224/171628.272500:ERROR:zygote_communication_linux.cc(292)] Failed to send GetTerminationStatus message to zygote
+[7178:7178:1224/171628.317847:ERROR:zygote_communication_linux.cc(292)] Failed to send GetTerminationStatus message to zygote
+[7178:7178:1224/171628.336903:ERROR:zygote_communication_linux.cc(292)] Failed to send GetTerminationStatus message to zygote
+The X11 connection broke: I/O error (code 1)
+XIO:  fatal IO error 25 (Inappropriate ioctl for device) on X server ":0"
+      after 35721 requests (35721 known processed) with 0 events remaining.
